@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 
-# DOSYA OKUMA FONKSİYONLARI
+# FILE READING FUNCTIONS
 
 def load_data():
-    raw_data = [] #ham veri listem 
+    raw_data = [] #My list to store the data from the file 
     try:
         with open("annual-co2-emissions-per-country.csv", 'r') as file:    
             file.readline()
@@ -26,7 +26,7 @@ def load_population():
         print("\nERROR: 'population.csv' file not found!")
     return raw_data
 
-# CRUD MENU FONKSİYONLARI BURADAN BAŞLIYOR.
+# CRUD MENU FUNCTIONS START HERE.
 
 def crud_menu(country_data):
     while True:
@@ -252,7 +252,7 @@ def delete_data(country_data):
 
 
 
-# ANALYSİS MENU FONKSİYONLARI BURADAN BAŞLIYOR.
+# ANALYSİS MENU FUNCTIONS START HERE.
 
 
 
@@ -604,7 +604,7 @@ To choose descending order : enter '2'.""").strip()
         print("\nNo matching record is found!")
 
 
-# REPORTİNG PLOTTİNG MENU BURADAN BAŞLIYOR.
+# REPORTİNG PLOTTİNG MENU BEGINS HERE.
 
 def report_plotting(country_data,population_data):
     while True:
@@ -674,15 +674,16 @@ def report_generation(country_data,population_data):
                 total_sum += i
             average = total_sum / len(last_n_emissions)
 
-            # STANDART SAPMA Formül: Kök içinde ( (değer - ortalama)^2 toplamı / eleman sayısı )
+            # Standard Deviation: Square root of (sum of squared differences from the mean / number of elements)
+
             sum_e = 0
             for i in last_n_emissions:
                 sum_e += (i - average) ** 2
 
-            standart_sapma = (sum_e / len(last_n_emissions)) ** 0.5
+            standard_deviation = (sum_e / len(last_n_emissions)) ** 0.5
         else:
             average = 0
-            standart_sapma = 0
+            standard_deviation = 0
 
         c_name = country[0].upper() + country[1:]
         print(f"\n--- Summary Report for {c_name} ---")
@@ -690,7 +691,7 @@ def report_generation(country_data,population_data):
         print(f"Historical MIN Emission : {min_e} (Year: {min_y})")
         print(f"Historical MAX Emission : {max_e} (Year: {max_y})")
         print(f"Average Emission (Last {n} Years) : {average:.2f}")
-        print(f"Standard Deviation (Last {n} Years) : {standart_sapma:.2f}")
+        print(f"Standard Deviation (Last {n} Years) : {standard_deviation:.2f}")
         print("-" * 40)
     else:
         print("\nNo matching record is found for this country!")
